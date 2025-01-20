@@ -30,7 +30,7 @@ it('should be able to create a Championship Tournament', function () {
         'name' => 'Brasileirao',
         'rules' => 'apenas para maiores de 18 anos',
         'start' => '2025-01-20',
-        'end'   => '2025/12/31',
+        'end' => '2025/12/31',
 
     ]);
 
@@ -39,7 +39,7 @@ it('should be able to create a Championship Tournament', function () {
 test('An Lawyer cannot create an championship', function () {
     $Lawyer = User::factory()->create();
     Livewire::actingAs($Lawyer)
-    ->test(App\Livewire\Admin\Championship\Create::class)
+        ->test(App\Livewire\Admin\Championship\Create::class)
         ->set('name', 'Brasileirao')
         ->set('championship_rules', 'apenas para maiores de 18 anos')
         ->set('start', '20-01-2025')
@@ -52,7 +52,27 @@ test('An Lawyer cannot create an championship', function () {
         'name' => 'Brasileirao',
         'rules' => 'apenas para maiores de 18 anos',
         'start' => '2025-01-20',
-        'end'   => '2025/12/31',
+        'end' => '2025/12/31',
 
     ]);
+});
+
+describe('validation tests', function () {
+
+    test('name::validations', function ($rule, $value) {
+
+        Livewire::test(App\Livewire\Admin\Championship\Create::class)
+            ->set('name', $value)
+            ->set('championship_rules', 'apenas para maiores de 18 anos')
+            ->set('start', '20-01-2025')
+            ->set('end', '31-12-2025')
+            ->call('save')
+            ->assertHasErrors(['name' => $rule]);
+    })->with([
+        'required' => ['required', ''],
+        'min' => ['min:3', 'aa'],
+        'max' => ['max:255', str_repeat('a', 256)],
+    ]);
+    
+
 });
