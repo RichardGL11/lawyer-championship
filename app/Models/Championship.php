@@ -14,6 +14,7 @@ class Championship extends Model
     use HasFactory;
 
     protected $guarded = [];
+
     public function teams(): HasMany
     {
         return $this->hasMany('teams');
@@ -22,13 +23,14 @@ class Championship extends Model
     public function start(): Attribute
     {
         return Attribute::make(
-            set: fn(string $value) => Carbon::parse($value)->format('Y-m-d')
+            set: fn (string $value) => Carbon::parse($value)->format('Y-m-d')
         );
     }
+
     public function end(): Attribute
     {
         return Attribute::make(
-            set: fn(string $value) => Carbon::parse($value)->format('Y-m-d')
+            set: fn (string $value) => Carbon::parse($value)->format('Y-m-d')
         );
     }
 }

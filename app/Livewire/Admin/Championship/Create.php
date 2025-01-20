@@ -8,7 +8,6 @@ use Livewire\Component;
 
 class Create extends Component
 {
-
     #[Validate('bail|required|string|min:3|max:255')]
     public ?string $name;
 
@@ -21,17 +20,17 @@ class Create extends Component
     #[Validate('required|string|date_format:d-m-Y')]
     public string $end;
 
-    public function save():void
+    public function save(): void
     {
 
         $this->validate();
         $this->authorize('create', Championship::class);
 
-         Championship::query()->create([
-            'name'  => $this->name,
+        Championship::query()->create([
+            'name' => $this->name,
             'rules' => $this->championship_rules,
             'start' => $this->start,
-            'end'   => $this->end,
+            'end' => $this->end,
         ]);
 
     }
