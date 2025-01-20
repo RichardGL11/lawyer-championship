@@ -45,7 +45,7 @@ class ChampionshipPolicy
      */
     public function delete(User $user, Championship $championship): bool
     {
-        return false;
+        return $user->user_type === UserTypeEnum::Admin;
     }
 
     /**
