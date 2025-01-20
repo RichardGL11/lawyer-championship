@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(User::class,'captain_id');
+            $table->foreignIdFor(User::class, 'captain_id');
             $table->timestamps();
         });
         Schema::create('team_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Team::class,'team_id');
-            $table->foreignIdFor(User::class,'user_id');
+            $table->foreignIdFor(Team::class, 'team_id');
+            $table->foreignIdFor(User::class, 'user_id');
             $table->timestamps();
         });
     }

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Game::class,'game_id');
-            $table->foreignIdFor(User::class,'user_id');
+            $table->foreignIdFor(Game::class, 'game_id');
+            $table->foreignIdFor(User::class, 'user_id');
             $table->time('minute');
             $table->timestamps();
         });

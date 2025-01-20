@@ -14,27 +14,27 @@ class Game extends Model
 
     protected $guarded = [];
 
-    public function goals():HasMany
+    public function goals(): HasMany
     {
         return $this->hasMany(Goal::class);
     }
 
-    public function assistences():HasMany
+    public function assistences(): HasMany
     {
         return $this->hasMany(Assistance::class);
     }
 
-    public function cards():HasMany
+    public function cards(): HasMany
     {
         return $this->hasMany(Card::class);
     }
 
-    public function team1():BelongsTo
+    public function team1(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'team_1_id');
     }
 
-    public function team2():BelongsTo
+    public function team2(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'team_2_id');
     }

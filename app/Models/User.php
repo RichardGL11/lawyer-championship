@@ -46,30 +46,31 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'user_type' => UserTypeEnum::class
+            'user_type' => UserTypeEnum::class,
         ];
     }
 
-
-    public function teams():HasMany
+    public function teams(): HasMany
     {
         return $this->hasMany(Team::class);
     }
 
-    public function statics():HasMany
+    public function statics(): HasMany
     {
         return $this->hasMany(UserGameStatic::class);
     }
-    public function goals():HasMany
+
+    public function goals(): HasMany
     {
         return $this->hasMany(Goal::class);
     }
-    public function assistance():HasMany
+
+    public function assistance(): HasMany
     {
         return $this->hasMany(Assistance::class);
     }
 
-    public function cards():HasMany
+    public function cards(): HasMany
     {
         return $this->hasMany(Card::class);
     }

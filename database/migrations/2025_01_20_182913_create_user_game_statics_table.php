@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('user_game_statics', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class,'user_id');
-            $table->foreignIdFor(Game::class,'game_id');
+            $table->foreignIdFor(User::class, 'user_id');
+            $table->foreignIdFor(Game::class, 'game_id');
             $table->integer('goals')->default(0);
             $table->integer('red_card')->default(0);
             $table->integer('yellow_card')->default(0);
