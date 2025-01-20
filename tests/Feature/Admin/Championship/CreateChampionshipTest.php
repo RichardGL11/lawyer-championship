@@ -73,7 +73,7 @@ describe('validation tests', function () {
         'min' => ['min:3', 'aa'],
         'max' => ['max:255', str_repeat('a', 256)],
     ]);
-    
+
     test('championship_rules::validations', function ($rule, $value) {
 
         Livewire::test(App\Livewire\Admin\Championship\Create::class)
@@ -88,5 +88,35 @@ describe('validation tests', function () {
         'min' => ['min:3', 'aa'],
         'max' => ['max:255', str_repeat('a', 256)],
     ]);
+
+    test('start::validations', function ($rule, $value) {
+
+        Livewire::test(App\Livewire\Admin\Championship\Create::class)
+            ->set('name', 'qualquer nome')
+            ->set('championship_rules', 'qualquer regra')
+            ->set('start', $value)
+            ->set('end', '31-12-2025')
+            ->call('save')
+            ->assertHasErrors(['start' => $rule]);
+    })->with([
+        'required' => ['required', ''],
+        'date_format' => ['date_format', '31/12/25'],
+    ]);
+
+    test('end::validations', function ($rule, $value) {
+
+        Livewire::test(App\Livewire\Admin\Championship\Create::class)
+            ->set('name', 'qualquer nome')
+            ->set('championship_rules', 'qualquer regra')
+            ->set('start', '31-12-2025')
+            ->set('end', $value)
+            ->call('save')
+            ->assertHasErrors(['end' => $rule]);
+    })->with([
+        'required' => ['required', ''],
+        'date_format' => ['date_format', '31/12/25'],
+    ]);
+
+
 
 });
