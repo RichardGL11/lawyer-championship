@@ -17,7 +17,10 @@ class ChampionshipFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'rules' => fake()->sentence(),
+            'start' => now(),
+            'end'   => '31-12-2025'
         ];
     }
 }
