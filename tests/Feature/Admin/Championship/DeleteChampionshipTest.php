@@ -20,3 +20,15 @@ it('should be able to delete a Championship',function (){
     assertDatabaseCount(Championship::class,0);
     assertModelMissing($championship);
 });
+test('Lawyer cant delete a championship',function (){
+    $user = User::factory()->create();
+    $championship = Championship::factory()->create();
+
+    Livewire::actingAs($user)
+        ->test(Delete::class)
+        ->call('delete',$championship)
+        ->assertForbidden();
+
+    assertDatabaseCount(Championship::class,1);
+    assertModelExists($championship);
+});
