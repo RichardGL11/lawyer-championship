@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('goal_team_1')->default(0);
             $table->integer('goal_team_2')->default(0);
             $table->integer('goals')->default(0);
+            $table->foreignIdFor(Team::class,'winner')->nullable();
             $table->date('day');
             $table->timestamps();
         });
