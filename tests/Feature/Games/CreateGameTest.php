@@ -62,4 +62,28 @@ describe('validation tests', function (){
         'required' => ['required', null],
         'exists'   => ['exists', 9999]
     ]);
+
+    test('team2::validations',function ($rule,$value){
+       $livewire = Livewire::actingAs($this->user)
+            ->test(CreateGame::class)
+            ->set('team1',$this->team1->getKey())
+            ->set('team2',$value)
+            ->set('day', $this->day)
+            ->call('save')
+            ->assertHasErrors(['team2' => $rule]);
+    })->with([
+        'required'  => ['required', null],
+        'exists'    => ['exists', 9999],
+    ]);
+
+    test('team2::different',function (){
+       $livewire = Livewire::actingAs($this->user)
+            ->test(CreateGame::class)
+            ->set('team1',$this->team1->getKey())
+            ->set('team2',$this->team1->getKey())
+            ->set('day', $this->day)
+            ->call('save')
+            ->assertHasErrors(['team2' => "The team2 field and team1 must be different."]);
+    });
+
 });
