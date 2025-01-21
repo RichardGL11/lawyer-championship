@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Games;
 
+use App\Models\Championship;
 use App\Models\Game;
 use App\Models\Team;
 use Livewire\Attributes\Validate;
@@ -13,6 +14,9 @@ class CreateGame extends Component
     public string|Team $team1;
     #[Validate('required|exists:teams,id|different:team1')]
     public string|Team $team2;
+
+    #[Validate('required|exists:championships,id')]
+    public int|Championship $championship;
     #[Validate('required|string|date|after:today')]
     public string $day;
 
@@ -21,9 +25,10 @@ class CreateGame extends Component
         $this->validate();
 
         Game::query()->create([
-           'team_1_id' => $this->team1,
-           'team_2_id' => $this->team2,
-           'day'       => $this->day
+            'championship_id' => $this->championship,
+           'team_1_id'        => $this->team1,
+           'team_2_id'        => $this->team2,
+           'day'               => $this->day
         ]);
 
     }

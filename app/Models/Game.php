@@ -14,6 +14,10 @@ class Game extends Model
 
     protected $guarded = [];
 
+    public function championship():BelongsTo
+    {
+        return $this->belongsTo(Championship::class,'championship_id');
+    }
     public function goals(): HasMany
     {
         return $this->hasMany(Goal::class);

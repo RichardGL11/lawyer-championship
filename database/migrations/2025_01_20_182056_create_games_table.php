@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Championship;
 use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Championship::class, 'championship_id');
             $table->foreignIdFor(Team::class, 'team_1_id');
             $table->foreignIdFor(Team::class, 'team_2_id');
             $table->integer('goal_team_1')->default(0);

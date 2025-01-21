@@ -28,6 +28,7 @@ it('should be able to create a game', function (){
         ->test(CreateGame::class)
         ->set('team1',$this->team1->getKey())
         ->set('team2',$this->team2->getKey())
+        ->set('championship', $this->championship->getKey())
         ->set('day',$this->day )
         ->call('save')
         ->assertHasNoErrors()
@@ -35,6 +36,7 @@ it('should be able to create a game', function (){
 
     assertDatabaseCount(Game::class,1);
     assertDatabaseHas(Game::class,[
+       'championship_id' =>$this->championship->getKey(),
        'team_1_id' => $this->team1->getKey(),
        'team_2_id' => $this->team2->getKey(),
        'day'       => $this->day
@@ -42,9 +44,13 @@ it('should be able to create a game', function (){
 
     $game = Game::query()->first();
     expect($game)
+        ->championship_id->toBe($this->championship->getKey())
         ->team_1_id->toBe($this->team1->getKey())
         ->team_2_id->toBe($this->team2->getKey())
-        ->day->toBe($this->day);
+        ->day->toBe($this->day)
+        ->and($game->championship->id)
+        ->toBe($this->championship->getKey());
+
 });
 
 describe('validation tests', function (){
@@ -54,6 +60,7 @@ describe('validation tests', function (){
             ->test(CreateGame::class)
             ->set('team1',$value)
             ->set('team2',$this->team2->getKey())
+            ->set('championship', $this->championship->getKey())
             ->set('day',$this->day )
             ->call('save')
             ->assertHasErrors(['team1' => $rule]);
@@ -68,6 +75,7 @@ describe('validation tests', function (){
             ->test(CreateGame::class)
             ->set('team1',$this->team1->getKey())
             ->set('team2',$value)
+           ->set('championship', $this->championship->getKey())
             ->set('day', $this->day)
             ->call('save')
             ->assertHasErrors(['team2' => $rule]);
@@ -81,6 +89,7 @@ describe('validation tests', function (){
             ->test(CreateGame::class)
             ->set('team1',$this->team1->getKey())
             ->set('team2',$this->team1->getKey())
+           ->set('championship', $this->championship->getKey())
             ->set('day', $this->day)
             ->call('save')
             ->assertHasErrors(['team2' => "The team2 field and team1 must be different."]);
