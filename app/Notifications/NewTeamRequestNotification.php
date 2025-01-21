@@ -37,8 +37,8 @@ class NewTeamRequestNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line("The user {$this->user->name} is asking you if he can joins at the team: {$this->team->name}")
-                    ->action('Accept: ', url(route('accept.invitation', $this->user)))
+                    ->subject("The user {$this->user->name} is asking you if he can joins at the team: {$this->team->name}")
+                    ->action('Accept: ', url(route('accept.invitation', ['user' => $this->user,'team' => $this->team ])))
                     ->line('Click at the button for accept');
     }
 

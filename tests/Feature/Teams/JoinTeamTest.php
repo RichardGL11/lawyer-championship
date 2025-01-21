@@ -24,8 +24,10 @@ test('user can request to join at a team',function (){
     Notification::assertCount(1);
     Notification::assertSentTo([$captain], NewTeamRequestNotification::class);
 
-    Notification::assertSentTo($captain, function (NewTeamRequestNotification $notification, array $channels) use ($captain){
-        return $notification->team->captain->id === $captain->id;
+    Notification::assertSentTo($captain, function (NewTeamRequestNotification $notification, array $channels) use ($captain, $user, $team){
+        return $notification->team->captain->id === $captain->id and
+        $notification->toMail($captain)->subject  == "The user {$user->name} is asking you if he can joins at the team: {$team->name}";
     });
+
 
 });

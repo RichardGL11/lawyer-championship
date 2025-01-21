@@ -1,5 +1,9 @@
 <?php
 
+use App\Livewire\Admin\Championship\Create;
+use App\Livewire\Admin\Championship\Delete;
+use App\Livewire\Admin\Championship\Update;
+use App\Livewire\Teams\AccepInvitationRequest;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -14,15 +18,12 @@ Route::view('profile', 'profile')
 
 Route::middleware('auth')->group(function (){
 
-    Route::post('/championships', \App\Livewire\Admin\Championship\Create::class)->name('championships.store');
-    Route::put('/championships/{championship}', \App\Livewire\Admin\Championship\Update::class)->name('championships.update');
-    Route::delete('/championships/{championship}', \App\Livewire\Admin\Championship\Delete::class)->name('championships.delete');
+    Route::post('/championships', Create::class)->name('championships.store');
+    Route::put('/championships/{championship}', Update::class)->name('championships.update');
+    Route::delete('/championships/{championship}', Delete::class)->name('championships.delete');
 
 
-
-
-
-
+    Route::post('/accep-invitation/{user}/{team}', AccepInvitationRequest::class)->name('accept.invitation');
 });
 
 require __DIR__.'/auth.php';
