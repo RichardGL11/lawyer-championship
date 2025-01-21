@@ -31,6 +31,7 @@ class Create extends Component
             'rules' => $this->championship_rules,
             'start' => $this->start,
             'end' => $this->end,
+            'user_id' => auth()->user()->id
         ]);
 
     }
