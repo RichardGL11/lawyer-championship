@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Admin\Championship\AcceptTeamInvitation;
 use App\Livewire\Admin\Championship\Create;
 use App\Livewire\Admin\Championship\Delete;
 use App\Livewire\Admin\Championship\Update;
@@ -24,6 +25,7 @@ Route::middleware('auth')->group(function (){
 
 
     Route::post('/accep-invitation/{user}/{team}', AccepInvitationRequest::class)->name('accept.invitation');
+    Route::post('/accep-team-invitation/{team}', AcceptTeamInvitation::class)->name('accept.team.invitation');
 });
 
 require __DIR__.'/auth.php';

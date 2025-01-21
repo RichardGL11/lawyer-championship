@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,8 @@ class ChampionshipFactory extends Factory
             'name' => $this->faker->name,
             'rules' => fake()->sentence(),
             'start' => now(),
-            'end'   => '31-12-2025'
+            'end'   => '31-12-2025',
+            'user_id' => User::factory()->admin()
         ];
     }
 }
