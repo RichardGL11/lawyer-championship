@@ -27,6 +27,7 @@ class GameFactory extends Factory
             'goal_team_2'     => 0,
             'goals'           => 0,
             'winner'          => null,
+            'local'           => 'street',
             'day'             => Carbon::tomorrow()->format('Y-m-d')
         ];
     }
