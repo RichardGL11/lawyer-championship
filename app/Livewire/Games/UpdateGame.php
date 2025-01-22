@@ -21,8 +21,6 @@ class UpdateGame extends Component
     public int $goalTeam1;
     #[Validate('nullable|integer')]
     public int $goalTeam2;
-    #[Validate('nullable|integer')]
-    public int $goals;
     #[Validate('required|string|min:3|max:255')]
     public string $local;
     #[Validate('required|string|date|after:today')]
@@ -39,7 +37,7 @@ class UpdateGame extends Component
         $game->local       = $this->local;
         $game->winner      = $this->winner->id;
         $game->day         = $this->day;
-        $game->goals       = $this->goals;
+        $game->goals       = $this->goalTeam1 + $this->goalTeam2;
         $game->update();
 
     }
