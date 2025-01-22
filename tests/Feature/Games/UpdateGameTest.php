@@ -43,6 +43,28 @@ test('Administrator should be able to update an game', function(){
        'local'           => 'street',
        'day'             => $day,
     ]);
-
 });
 
+test('normal user can not update an game', function () {
+
+    $user = User::factory()->create();
+    $team1 = Team::factory()->createOne();
+    $team2 = Team::factory()->createOne();
+    $game = Game::factory()->create([
+        'team_1_id' => $team1->getKey(),
+        'team_2_id' => $team2->getKey(),
+    ]);
+    $day = Carbon::tomorrow()->format('Y-m-d');
+    Livewire::actingAs($user)
+        ->test(UpdateGame::class)
+        ->set('team1',$team1->getKey())
+        ->set('team2',$team2->getKey())
+        ->set('goalTeam1', 1)
+        ->set('goalTeam2', 1)
+        ->set('goals', 2)
+        ->set('local', 'street')
+        ->set('day', $day)
+        ->set('winner', $game->team2)
+        ->call('update', $game)
+        ->assertForbidden();
+});
