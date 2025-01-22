@@ -165,6 +165,32 @@ describe('validation tests', function (){
         'max'       => ['max:255', str_repeat('*',256)],
         'min'       => ['min:3','aa']
     ]);
+
+    test('day', function($rule,$value){
+        $admin = User::factory()->admin()->create();
+        $team1 = Team::factory()->createOne();
+        $team2 = Team::factory()->createOne();
+        $game = Game::factory()->create([
+            'team_1_id' => $team1->getKey(),
+            'team_2_id' => $team2->getKey(),
+        ]);
+        $day = Carbon::tomorrow()->format('Y-m-d');
+        Livewire::actingAs($admin)
+            ->test(UpdateGame::class)
+            ->set('team1',$team1->getKey())
+            ->set('team2',$team2->getKey())
+            ->set('goalTeam1', 1)
+            ->set('goalTeam2', 1)
+            ->set('local', 'street')
+            ->set('day', $value)
+            ->set('winner', $game->team2)
+            ->call('update', $game)
+            ->assertHasErrors(['day' => $rule]);
+    })->with([
+        'required'  => ['required', null],
+        'date'       => ['date', 'aaaaaaa'],
+        'after:today'       => ['after',today()]
+    ]);
 });
 
 
