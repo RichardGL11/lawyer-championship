@@ -21,8 +21,8 @@ test('Administrator should be able to update an game', function(){
     $day = Carbon::tomorrow()->format('Y-m-d');
     Livewire::actingAs($admin)
         ->test(UpdateGame::class)
-        ->set('team1',$team1->getKey())
-        ->set('team2',$team2->getKey())
+        ->set('team1',$team1)
+        ->set('team2',$team2)
         ->set('goalTeam1', 1)
         ->set('goalTeam2', 1)
         ->set('local', 'street')
@@ -56,8 +56,8 @@ test('normal user can not update an game', function () {
     $day = Carbon::tomorrow()->format('Y-m-d');
     Livewire::actingAs($user)
         ->test(UpdateGame::class)
-        ->set('team1',$team1->getKey())
-        ->set('team2',$team2->getKey())
+        ->set('team1',$team1)
+        ->set('team2',$team2)
         ->set('goalTeam1', 1)
         ->set('goalTeam2', 1)
         ->set('local', 'street')
@@ -81,7 +81,7 @@ describe('validation tests', function (){
         Livewire::actingAs($admin)
             ->test(UpdateGame::class)
             ->set('team1',$value)
-            ->set('team2',$team2->getKey())
+            ->set('team2',$team2)
             ->set('goalTeam1', 1)
             ->set('goalTeam2', 1)
             ->set('local', 'street')
@@ -91,7 +91,6 @@ describe('validation tests', function (){
             ->assertHasErrors(['team1' => $rule]);
     })->with([
         'required' => ['required', null],
-        'exists'   => ['exists', 999]
     ]);
 
     test('team2', function($rule,$value){
@@ -105,7 +104,7 @@ describe('validation tests', function (){
         $day = Carbon::tomorrow()->format('Y-m-d');
         Livewire::actingAs($admin)
             ->test(UpdateGame::class)
-            ->set('team1',$team1->getKey())
+            ->set('team1',$team1)
             ->set('team2',$value)
             ->set('goalTeam1', 1)
             ->set('goalTeam2', 1)
@@ -116,7 +115,6 @@ describe('validation tests', function (){
             ->assertHasErrors(['team2' => $rule]);
     })->with([
         'required' => ['required', null],
-        'exists'   => ['exists', 999]
     ]);
 
     test('team2::different', function(){
@@ -130,8 +128,8 @@ describe('validation tests', function (){
         $day = Carbon::tomorrow()->format('Y-m-d');
         Livewire::actingAs($admin)
             ->test(UpdateGame::class)
-            ->set('team1',$team1->getKey())
-            ->set('team2',$team1->getKey())
+            ->set('team1',$team1)
+            ->set('team2',$team1)
             ->set('goalTeam1', 1)
             ->set('goalTeam2', 1)
             ->set('local', 'street')
@@ -151,8 +149,8 @@ describe('validation tests', function (){
         $day = Carbon::tomorrow()->format('Y-m-d');
         Livewire::actingAs($admin)
             ->test(UpdateGame::class)
-            ->set('team1',$team1->getKey())
-            ->set('team2',$team2->getKey())
+            ->set('team1',$team1)
+            ->set('team2',$team2)
             ->set('goalTeam1', 1)
             ->set('goalTeam2', 1)
             ->set('local', $value)
@@ -177,8 +175,8 @@ describe('validation tests', function (){
         $day = Carbon::tomorrow()->format('Y-m-d');
         Livewire::actingAs($admin)
             ->test(UpdateGame::class)
-            ->set('team1',$team1->getKey())
-            ->set('team2',$team2->getKey())
+            ->set('team1',$team1)
+            ->set('team2',$team2)
             ->set('goalTeam1', 1)
             ->set('goalTeam2', 1)
             ->set('local', 'street')

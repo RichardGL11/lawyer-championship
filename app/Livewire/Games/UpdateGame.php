@@ -11,10 +11,10 @@ use function PHPUnit\Framework\isInstanceOf;
 
 class UpdateGame extends Component
 {
-    #[Validate('bail|required|exists:teams,id')]
-    public int|Team $team1;
-    #[Validate('required|exists:teams,id|different:team1')]
-    public int|Team $team2;
+    #[Validate('required')]
+    public Team $team1;
+    #[Validate('required|different:team1')]
+    public Team $team2;
     #[Validate('sometimes','exists:teams,id','in:team1,team2')]
     public Team $winner;
     #[Validate('nullable|integer')]
