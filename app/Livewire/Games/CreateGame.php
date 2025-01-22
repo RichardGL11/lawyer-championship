@@ -20,6 +20,9 @@ class CreateGame extends Component
     #[Validate('required|string|date|after:today')]
     public string $day;
 
+    #[Validate('required|string|min:3|max:255')]
+    public string $local;
+
     public function save()
     {
         $this->validate();
@@ -28,7 +31,8 @@ class CreateGame extends Component
             'championship_id' => $this->championship,
            'team_1_id'        => $this->team1,
            'team_2_id'        => $this->team2,
-           'day'               => $this->day
+           'day'              => $this->day,
+           'local'            => $this->local
         ]);
 
     }

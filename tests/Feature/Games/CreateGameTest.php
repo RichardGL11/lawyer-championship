@@ -29,7 +29,8 @@ it('should be able to create a game', function (){
         ->set('team1',$this->team1->getKey())
         ->set('team2',$this->team2->getKey())
         ->set('championship', $this->championship->getKey())
-        ->set('day',$this->day )
+        ->set('day',$this->day)
+        ->set('local', 'street')
         ->call('save')
         ->assertHasNoErrors()
         ->assertOk();
@@ -39,7 +40,8 @@ it('should be able to create a game', function (){
        'championship_id' =>$this->championship->getKey(),
        'team_1_id' => $this->team1->getKey(),
        'team_2_id' => $this->team2->getKey(),
-       'day'       => $this->day
+       'day'       => $this->day,
+       'local'    =>  'street'
     ]);
 
     $game = Game::query()->first();
@@ -48,6 +50,7 @@ it('should be able to create a game', function (){
         ->team_1_id->toBe($this->team1->getKey())
         ->team_2_id->toBe($this->team2->getKey())
         ->day->toBe($this->day)
+        ->local->toBe('street')
         ->and($game->championship->id)
         ->toBe($this->championship->getKey());
 
@@ -62,6 +65,7 @@ describe('validation tests', function (){
             ->set('team2',$this->team2->getKey())
             ->set('championship', $this->championship->getKey())
             ->set('day',$this->day )
+            ->set('local','street')
             ->call('save')
             ->assertHasErrors(['team1' => $rule]);
 
