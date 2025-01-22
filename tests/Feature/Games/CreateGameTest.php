@@ -75,7 +75,7 @@ describe('validation tests', function (){
     ]);
 
     test('team2::validations',function ($rule,$value){
-       $livewire = Livewire::actingAs($this->user)
+        Livewire::actingAs($this->user)
             ->test(CreateGame::class)
             ->set('team1',$this->team1->getKey())
             ->set('team2',$value)
@@ -89,7 +89,7 @@ describe('validation tests', function (){
     ]);
 
     test('team2::different',function (){
-       $livewire = Livewire::actingAs($this->user)
+        Livewire::actingAs($this->user)
             ->test(CreateGame::class)
             ->set('team1',$this->team1->getKey())
             ->set('team2',$this->team1->getKey())
@@ -99,4 +99,19 @@ describe('validation tests', function (){
             ->assertHasErrors(['team2' => "The team2 field and team1 must be different."]);
     });
 
+    test('local::validations',function ($rule, $value){
+        Livewire::actingAs($this->user)
+            ->test(CreateGame::class)
+            ->set('team1',$this->team1->getKey())
+            ->set('team2',$this->team2->getKey())
+            ->set('championship', $this->championship->getKey())
+            ->set('day', $this->day)
+            ->set('local',$value)
+            ->call('save')
+            ->assertHasErrors(['local' => $rule]);
+    })->with([
+        'required' => ['required',''],
+        'min'      => ['min:3','aa'],
+        'max'      => ['max:255',str_repeat('a',256)],
+    ]);
 });
