@@ -96,6 +96,55 @@ describe('validation tests', function (){
         'required' => ['required', null],
         'exists'   => ['exists', 999]
     ]);
+
+    test('team2', function($rule,$value){
+        $admin = User::factory()->admin()->create();
+        $team1 = Team::factory()->createOne();
+        $team2 = Team::factory()->createOne();
+        $game = Game::factory()->create([
+            'team_1_id' => $team1->getKey(),
+            'team_2_id' => $team2->getKey(),
+        ]);
+        $day = Carbon::tomorrow()->format('Y-m-d');
+        Livewire::actingAs($admin)
+            ->test(UpdateGame::class)
+            ->set('team1',$team1->getKey())
+            ->set('team2',$value)
+            ->set('goalTeam1', 1)
+            ->set('goalTeam2', 1)
+            ->set('goals', 2)
+            ->set('local', 'street')
+            ->set('day', $day)
+            ->set('winner', $game->team2)
+            ->call('update', $game)
+            ->assertHasErrors(['team2' => $rule]);
+    })->with([
+        'required' => ['required', null],
+        'exists'   => ['exists', 999]
+    ]);
+
+    test('team2::different', function(){
+        $admin = User::factory()->admin()->create();
+        $team1 = Team::factory()->createOne();
+        $team2 = Team::factory()->createOne();
+        $game = Game::factory()->create([
+            'team_1_id' => $team1->getKey(),
+            'team_2_id' => $team2->getKey(),
+        ]);
+        $day = Carbon::tomorrow()->format('Y-m-d');
+        Livewire::actingAs($admin)
+            ->test(UpdateGame::class)
+            ->set('team1',$team1->getKey())
+            ->set('team2',$team1->getKey())
+            ->set('goalTeam1', 1)
+            ->set('goalTeam2', 1)
+            ->set('goals', 2)
+            ->set('local', 'street')
+            ->set('day', $day)
+            ->set('winner', $game->team2)
+            ->call('update', $game)
+            ->assertHasErrors(['team2' => 'The team2 field and team1 must be different.']);
+    });
 });
 
 
