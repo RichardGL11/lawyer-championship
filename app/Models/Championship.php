@@ -19,12 +19,12 @@ class Championship extends Model
 
     public function user():BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function teams():BelongsToMany
     {
-        return $this->belongsToMany('teams');
+        return $this->belongsToMany(Team::class);
     }
 
     public function start(): Attribute

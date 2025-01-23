@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class TeamSeeder extends Seeder
@@ -11,6 +13,12 @@ class TeamSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Team::factory([
+            'captain_id' => User::factory()->newModel()
+        ]);
+
+        Team::factory(3)
+            ->has(User::factory()->count(5))
+            ->create();
     }
 }

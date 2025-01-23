@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Championship;
 use App\Models\Team;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,13 +17,16 @@ class DatabaseSeeder extends Seeder
     {
          User::factory(10)->create();
 
-         Team::factory([
-             'captain_id' => User::factory()->newModel()
-         ]);
-
         User::factory()->admin()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        $this->call(TeamSeeder::class);
+        $this->call(ChampionshipSeeder::class);
+
+
+
+
     }
 }

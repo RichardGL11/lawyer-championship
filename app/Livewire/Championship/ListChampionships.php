@@ -23,7 +23,7 @@ class ListChampionships extends Component
     public function myChampionships(): ?Collection
     {
         $user = User::query()->where('id',Auth::id())->first();
-        return  $user->teams()->with('championships')->get();
+        return  $user->teams()->with('championships')->with('users')->get();
     }
     #[Layout('app.layouts')]
     public function render()
