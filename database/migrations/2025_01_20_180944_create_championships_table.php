@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('championship_teams', function (Blueprint $table) {
+        Schema::create('championship_team', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Team::class, 'team_id');
             $table->foreignIdFor(Championship::class, 'championship_id');

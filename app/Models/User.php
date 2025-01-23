@@ -5,6 +5,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -49,10 +51,9 @@ class User extends Authenticatable
             'user_type' => UserTypeEnum::class,
         ];
     }
-
-    public function teams(): HasMany
+    public function teams():BelongsToMany
     {
-        return $this->hasMany(Team::class);
+        return $this->belongsToMany(Team::class);
     }
 
     public function statics(): HasMany
