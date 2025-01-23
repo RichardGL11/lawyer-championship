@@ -19,5 +19,6 @@ it('should list all championships and their attributes', function (){
        $request->assertSee($championship->rules);
        $request->assertSee($championship->start);
        $request->assertSee($championship->end);
+       $request->assertSee($championship->teams()->count());
     });
 });
