@@ -20,12 +20,12 @@ class ListChampionships extends Component
     }
 
     #[Computed]
-    public function myChampionships(): ?Collection
+    public function myTeams(): ?Collection
     {
         $user = User::query()->where('id',Auth::id())->first();
         return  $user->teams()->with('championships')->with('users')->get();
     }
-    #[Layout('app.layouts')]
+    #[Layout('layouts.app')]
     public function render()
     {
         return view('livewire.championship.list-championships');

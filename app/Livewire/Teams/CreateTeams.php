@@ -16,10 +16,11 @@ class CreateTeams extends Component
     public function save()
     {
         $this->validate();
-        Team::query()->create([
+       $team = Team::query()->create([
             'name'       => $this->name,
             'captain_id' => $this->captain_id
         ]);
+       $team->users()->attach($this->captain_id);
     }
     public function render()
     {

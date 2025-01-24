@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,4 +23,12 @@ class TeamFactory extends Factory
             'captain_id' => User::factory()
         ];
     }
+
+    public function configure(): TeamFactory|Factory
+    {
+        return $this->afterCreating(function (Team $team){
+           $team->users()->attach($team->captain->id);
+        });
+    }
+
 }
