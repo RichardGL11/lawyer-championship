@@ -5,9 +5,10 @@
 
             <p class="mt-4 text-gray-500 xl:mt-6 dark:text-gray-300">
                 <span class="underline decoration-amber-50">
-                    Rules
+                    Rules:
                 </span>
                 <br>
+                {{$this->championship->rules}}
             </p>
             @if($this->championship->teams->count() > 0 )
                 @foreach($this->championship->teams as $team)
