@@ -1,5 +1,6 @@
 <div class="text-white">
-    <h1>componente</h1>
+    @dump($this->myTeams())
+    <h1>Teams that you are participating: {{$this->myTeams->count()}}</h1>
     @foreach($this->championships as $championship)
         <div><ul>Championship Name: {{$championship->name}}</ul></div>
         <div><ul>Owner for contact: {{$championship->user->name}}</ul></div>
