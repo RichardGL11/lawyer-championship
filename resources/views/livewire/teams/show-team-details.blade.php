@@ -40,9 +40,9 @@
                                 </th>
                                 @if($this->belongs === false)
                                 <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    <button  class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                                    <a href="{{route('invitation-team.send',$this->team)}}"  class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                                         Ask for participate
-                                    </button>
+                                    </a>
                                 </th>
                                 @endif
                                 <th scope="col" class="relative py-3.5 px-4">

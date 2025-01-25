@@ -8,12 +8,10 @@ use Livewire\Component;
 
 class AccepInvitationRequest extends Component
 {
-    public function acceptInvitationRequest(User $user, Team $team)
+    public function mount(User $user, Team $team)
     {
         $team->users()->attach($user->id);
+        return response()->redirectTo('/dashboard');
     }
-    public function render()
-    {
-        return view('livewire.teams.accep-invitation-request');
-    }
+
 }

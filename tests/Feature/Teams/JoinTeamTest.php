@@ -4,12 +4,12 @@ use App\Livewire\Teams\JoinTeam;
 use App\Models\Team;
 use App\Models\User;
 use App\Notifications\NewTeamRequestNotification;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
 
 test('user can request to join at a team',function (){
     Notification::fake();
-
     $user = User::factory()->create();
     $captain = User::factory()->create();
     $team = Team::factory()->createOne([
@@ -17,8 +17,7 @@ test('user can request to join at a team',function (){
     ]);
 
     Livewire::actingAs($user)
-        ->test(JoinTeam::class)
-        ->call('requestForJoin', $team)
+        ->test(JoinTeam::class,['team' => $team])
         ->assertHasNoErrors();
 
     Notification::assertCount(1);
