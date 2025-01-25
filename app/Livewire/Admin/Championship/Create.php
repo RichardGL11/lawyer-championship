@@ -3,6 +3,8 @@
 namespace App\Livewire\Admin\Championship;
 
 use App\Models\Championship;
+use Illuminate\Http\RedirectResponse;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -14,13 +16,13 @@ class Create extends Component
     #[Validate('required|string|min:3|max:255')]
     public string $championship_rules;
 
-    #[Validate('required|string|date_format:d-m-Y')]
+    #[Validate('required|string|date')]
     public string $start;
 
-    #[Validate('required|string|date_format:d-m-Y')]
+    #[Validate('required|string|date')]
     public string $end;
 
-    public function save(): void
+    public function save()
     {
 
         $this->validate();
@@ -33,9 +35,11 @@ class Create extends Component
             'end' => $this->end,
             'user_id' => auth()->user()->id
         ]);
+        return response()->redirectTo('/dashboard');
 
     }
 
+    #[Layout('layouts.app')]
     public function render()
     {
         return view('livewire.admin.championship.create');

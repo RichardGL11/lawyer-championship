@@ -100,7 +100,7 @@ describe('validation tests', function () {
             ->assertHasErrors(['start' => $rule]);
     })->with([
         'required' => ['required', ''],
-        'date_format' => ['date_format', '31/12/25'],
+        'date' => ['date', 'aaaaa'],
     ]);
 
     test('end::validations', function ($rule, $value) {
@@ -114,7 +114,7 @@ describe('validation tests', function () {
             ->assertHasErrors(['end' => $rule]);
     })->with([
         'required' => ['required', ''],
-        'date_format' => ['date_format', '31/12/25'],
+        'date' => ['date', 'aaaaa'],
     ]);
 
 
