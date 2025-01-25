@@ -21,7 +21,7 @@ Route::view('profile', 'profile')
 
 Route::middleware('auth')->group(function (){
 
-    Route::post('/championships', Create::class)->name('championships.store');
+    Route::get('/championships', Create::class)->name('championships.store');
     Route::put('/championships/{championship}', Update::class)->name('championships.update');
     Route::delete('/championships/{championship}', Delete::class)->name('championships.delete');
     Route::get('/championships/{championship}', ShowChampionshipDetails::class)->name('championships.show');
