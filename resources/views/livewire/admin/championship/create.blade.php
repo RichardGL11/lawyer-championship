@@ -1,6 +1,6 @@
 <div class="m-5">
     <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
-        <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">Account settings</h2>
+        <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">Championship settings</h2>
 
         <form wire:submit="save">
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">

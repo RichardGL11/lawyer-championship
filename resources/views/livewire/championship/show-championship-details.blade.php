@@ -1,8 +1,10 @@
 <div>
     <section class="bg-white dark:bg-gray-900">
         <div class="container px-6 py-10 mx-auto">
+            <div class="inline-flex space-x-*">
             <h1 class="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">Championship: <br>  <span class="underline decoration-blue-500">{{$this->championship->name}}</span></h1>
-
+            <livewire:admin.championship.join-championship :championship="$this->championship">
+            </div>
             <p class="mt-4 text-gray-500 xl:mt-6 dark:text-gray-300">
                 <span class="underline decoration-amber-50">
                     Rules:
@@ -35,6 +37,8 @@
                 </div>
             </div>
              @endforeach
+            @else
+                <h3>There is no teams at the championship</h3>
               @endif
         </div>
     </section>

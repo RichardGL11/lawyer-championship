@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ChampionshipRequestNotification extends Notification
+class ChampionshipRequestNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -37,8 +37,8 @@ class ChampionshipRequestNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject("The user {$this->team->captain->name} captain of the team:  {$this->team->name}, request for participate to the championship {$this->championship}")
-            ->action('Accept: ', url(route('accept.team.invitation', $this->team )))
+            ->subject("The user {$this->team->captain->name} captain of the team:  {$this->team->name}, request for participate to the championship {$this->championship->name}")
+            ->action('Accept: ', url(route('accept.team.invitation', ['team'=> $this->team,'championship' => $this->championship] )))
             ->line('Click at the button for accept');
     }
 
@@ -53,4 +53,5 @@ class ChampionshipRequestNotification extends Notification
             //
         ];
     }
+
 }
