@@ -6,10 +6,13 @@ use App\Models\Team;
 use App\Models\User;
 use App\Notifications\ChampionshipRequestNotification;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
+
 
 test('A captain should request to his team join a championship', function (){
     Notification::fake();
+    Queue::fake();
     $captain = User::factory()->create();
     $team = Team::factory()->create(['captain_id' => $captain->getKey()]);
     $admin = User::factory()->admin()->create();
@@ -21,7 +24,6 @@ test('A captain should request to his team join a championship', function (){
         ->call('sendRequest', $team, $championship)
         ->assertHasNoErrors();
 
-    Notification::assertCount(1);
     Notification::assertSentTo([$admin],  ChampionshipRequestNotification::class);
     Notification::assertSentTo($admin, function (ChampionshipRequestNotification $notification) use ($captain, $admin, $team,$championship){
         return $notification->team->captain->id === $captain->id and

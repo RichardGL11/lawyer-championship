@@ -42,6 +42,12 @@ new class extends Component {
                     </div>
                 @endcan
 
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('teams.store')" :active="request()->routeIs('teams.store')" wire:navigate>
+                        {{ __('Create Team') }}
+                    </x-nav-link>
+                </div>
+
             </div>
 
             <!-- Settings Dropdown -->
