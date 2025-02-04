@@ -5,6 +5,7 @@ namespace App\Livewire\Games;
 use App\Models\Championship;
 use App\Models\Game;
 use App\Models\Team;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -15,8 +16,8 @@ class CreateGame extends Component
     #[Validate('required|exists:teams,id|different:team1')]
     public string|Team $team2;
 
-    #[Validate('required|exists:championships,id')]
-    public int|Championship $championship;
+    #[Validate('required')]
+    public Championship $championship;
     #[Validate('required|string|date|after:today')]
     public string $day;
 
@@ -28,14 +29,18 @@ class CreateGame extends Component
         $this->validate();
 
         Game::query()->create([
-            'championship_id' => $this->championship,
+            'championship_id' => $this->championship->getKey(),
            'team_1_id'        => $this->team1,
            'team_2_id'        => $this->team2,
            'day'              => $this->day,
            'local'            => $this->local
         ]);
+        $this->pull('team1','team2','local','day');
+
+        $this->dispatch('game::created')->to(ListGames::class);
 
     }
+    #[Layout('app.layouts')]
     public function render()
     {
         return view('livewire.games.create-game');

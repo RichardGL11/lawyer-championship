@@ -25,10 +25,9 @@ beforeEach(function (){
 
 it('should be able to create a game', function (){
     Livewire::actingAs($this->user)
-        ->test(CreateGame::class)
+        ->test(CreateGame::class,['championship' => $this->championship])
         ->set('team1',$this->team1->getKey())
         ->set('team2',$this->team2->getKey())
-        ->set('championship', $this->championship->getKey())
         ->set('day',$this->day)
         ->set('local', 'street')
         ->call('save')
@@ -60,10 +59,9 @@ describe('validation tests', function (){
 
     test('team1::validations',function ($rule,$value){
         Livewire::actingAs($this->user)
-            ->test(CreateGame::class)
+            ->test(CreateGame::class,['championship' => $this->championship])
             ->set('team1',$value)
             ->set('team2',$this->team2->getKey())
-            ->set('championship', $this->championship->getKey())
             ->set('day',$this->day )
             ->set('local','street')
             ->call('save')
@@ -76,10 +74,9 @@ describe('validation tests', function (){
 
     test('team2::validations',function ($rule,$value){
         Livewire::actingAs($this->user)
-            ->test(CreateGame::class)
+            ->test(CreateGame::class, ['championship' => $this->championship])
             ->set('team1',$this->team1->getKey())
             ->set('team2',$value)
-           ->set('championship', $this->championship->getKey())
             ->set('day', $this->day)
             ->call('save')
             ->assertHasErrors(['team2' => $rule]);
@@ -90,10 +87,9 @@ describe('validation tests', function (){
 
     test('team2::different',function (){
         Livewire::actingAs($this->user)
-            ->test(CreateGame::class)
+            ->test(CreateGame::class, ['championship' => $this->championship])
             ->set('team1',$this->team1->getKey())
             ->set('team2',$this->team1->getKey())
-           ->set('championship', $this->championship->getKey())
             ->set('day', $this->day)
             ->call('save')
             ->assertHasErrors(['team2' => "The team2 field and team1 must be different."]);
@@ -101,10 +97,9 @@ describe('validation tests', function (){
 
     test('local::validations',function ($rule, $value){
         Livewire::actingAs($this->user)
-            ->test(CreateGame::class)
+            ->test(CreateGame::class,['championship' => $this->championship])
             ->set('team1',$this->team1->getKey())
             ->set('team2',$this->team2->getKey())
-            ->set('championship', $this->championship->getKey())
             ->set('day', $this->day)
             ->set('local',$value)
             ->call('save')

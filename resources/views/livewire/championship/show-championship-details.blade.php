@@ -18,13 +18,15 @@
             <div class="container mx-auto p-4 mb-4"  x-data="{ tab: 'tab1' }">
                 <h2 class="text-2xl font-bold text-white">Tabs</h2>
                 <ul class="flex border-b mt-6">
+                    @can('update', $this->championship)
                     <li class="-mb-px mr-1">
                         <a
                             class="inline-block rounded-t py-2 px-4 font-semibold hover:text-blue-800"  href="#"
                             :class="{ 'bg-white text-blue-700 border-l border-t border-r': tab == 'tab1'}"
                             @click.prevent="tab = 'tab1'"
-                        >Games</a>
+                        >Create Game</a>
                     </li>
+                    @endcan
                     <li class="-mb-px mr-1">
                         <a
                             class="inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold"
@@ -40,19 +42,20 @@
                             href="#"
                             :class="{ 'bg-white text-blue-700 border-l border-t border-r': tab == 'tab3'}"
                             @click.prevent="tab = 'tab3'"
-                        >Tab 3</a
-                        >
+                        >Games</a>
                     </li>
                 </ul>
                 <div class="content bg-white px-4 py-4 border-l border-r border-b pt-4">
+                    @can('update', $this->championship)
                     <div x-show="tab == 'tab1'">
-                        <livewire:games.create-game/>
+                        <livewire:games.create-game :championship="$this->championship"/>
                     </div>
+                    @endcan
                     <div x-show="tab == 'tab2'">
                         <x-card-component :teams="$this->championship->teams"/>
                     </div>
                     <div x-show="tab == 'tab3'">
-                        Tab3 content. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt sunt, consectetur eos quod perferendis mollitia consequuntur natus, porro molestiae qui iusto deserunt rerum tempore voluptatum itaque. Ad, nisi esse cum quidem consequuntur ullam obcaecati.
+                       <livewire:games.list-games :championship="$this->championship"/>
                     </div>
 
                 </div>
