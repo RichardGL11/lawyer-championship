@@ -1,11 +1,5 @@
 <div class="text-white">
     @if($teams->isNotEmpty())
-        <ul>
-
-        </ul>
-    @else
-        <p>Você não tem nenhum time onde seja capitão.</p>
-    @endif
         <div x-data="{ isOpen: true }" class="relative inline-block ">
             <!-- Dropdown toggle button -->
             <button @click="isOpen = !isOpen" class="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-800 focus:outline-none">
@@ -29,14 +23,18 @@
 
                 <hr class="border-gray-200 dark:border-gray-700 ">
 
-                    @foreach($teams as $team)
+                @foreach($teams as $team)
                     <li class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                            <button wire:click="sendRequest({{ $team }}, {{ $championship }})">
-                                Solicitar para o Campeonato: {{ $team->name }}
-                            </button>
+                        <button wire:click="sendRequest({{ $team }}, {{ $championship }})">
+                            Solicitar para o Campeonato: {{ $team->name }}
+                        </button>
                     </li>
                     <hr class="border-gray-200 dark:border-gray-700 ">
-                    @endforeach
+                @endforeach
             </div>
         </div>
+    @else
+        <p>Você não tem nenhum time onde seja capitão.</p>
+    @endif
+
 </div>
