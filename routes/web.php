@@ -6,10 +6,13 @@ use App\Livewire\Admin\Championship\Delete;
 use App\Livewire\Admin\Championship\JoinChampionship;
 use App\Livewire\Admin\Championship\Update;
 use App\Livewire\Championship\ShowChampionshipDetails;
+use App\Livewire\Games\UpdateGame;
 use App\Livewire\Teams\AccepInvitationRequest;
 use App\Livewire\Teams\CreateTeams;
 use App\Livewire\Teams\JoinTeam;
 use App\Livewire\Teams\ShowTeamDetails;
+use App\Models\Game;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -36,6 +39,9 @@ Route::middleware('auth')->group(function (){
 
     Route::get('/send-invitation/{team}', JoinTeam::class)->name('invitation-team.send');
     Route::get('/send-invitation/{championship}', JoinChampionship::class)->name('invitation-captain-championship.send');
+
+    Route::get('/edit-games/{game}', UpdateGame::class)->name('games.edit');
+
 
 });
 

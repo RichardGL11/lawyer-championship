@@ -19,16 +19,15 @@ test('Administrator should be able to update an game', function(){
         'team_2_id' => $team2->getKey(),
     ]);
     $day = Carbon::tomorrow()->format('Y-m-d');
+
     Livewire::actingAs($admin)
-        ->test(UpdateGame::class)
-        ->set('team1',$team1)
-        ->set('team2',$team2)
+        ->test(UpdateGame::class,['game' => $game])
         ->set('goalTeam1', 1)
         ->set('goalTeam2', 1)
         ->set('local', 'street')
         ->set('day', $day)
-        ->set('winner', $game->team2)
-        ->call('update', $game)
+        ->set('winner', $game->team2->id)
+        ->call('update')
         ->assertHasNoErrors();
     assertDatabaseCount(Game::class,1);
     assertDatabaseHas(Game::class,[
@@ -55,89 +54,12 @@ test('normal user can not update an game', function () {
     ]);
     $day = Carbon::tomorrow()->format('Y-m-d');
     Livewire::actingAs($user)
-        ->test(UpdateGame::class)
-        ->set('team1',$team1)
-        ->set('team2',$team2)
-        ->set('goalTeam1', 1)
-        ->set('goalTeam2', 1)
-        ->set('local', 'street')
-        ->set('day', $day)
-        ->set('winner', $game->team2)
-        ->call('update', $game)
+        ->test(UpdateGame::class,['game' => $game])
         ->assertForbidden();
 });
 
 describe('validation tests', function (){
 
-    test('team1', function($rule,$value){
-        $admin = User::factory()->admin()->create();
-        $team1 = Team::factory()->createOne();
-        $team2 = Team::factory()->createOne();
-        $game = Game::factory()->create([
-            'team_1_id' => $team1->getKey(),
-            'team_2_id' => $team2->getKey(),
-        ]);
-        $day = Carbon::tomorrow()->format('Y-m-d');
-        Livewire::actingAs($admin)
-            ->test(UpdateGame::class)
-            ->set('team1',$value)
-            ->set('team2',$team2)
-            ->set('goalTeam1', 1)
-            ->set('goalTeam2', 1)
-            ->set('local', 'street')
-            ->set('day', $day)
-            ->set('winner', $game->team2)
-            ->call('update', $game)
-            ->assertHasErrors(['team1' => $rule]);
-    })->with([
-        'required' => ['required', null],
-    ]);
-
-    test('team2', function($rule,$value){
-        $admin = User::factory()->admin()->create();
-        $team1 = Team::factory()->createOne();
-        $team2 = Team::factory()->createOne();
-        $game = Game::factory()->create([
-            'team_1_id' => $team1->getKey(),
-            'team_2_id' => $team2->getKey(),
-        ]);
-        $day = Carbon::tomorrow()->format('Y-m-d');
-        Livewire::actingAs($admin)
-            ->test(UpdateGame::class)
-            ->set('team1',$team1)
-            ->set('team2',$value)
-            ->set('goalTeam1', 1)
-            ->set('goalTeam2', 1)
-            ->set('local', 'street')
-            ->set('day', $day)
-            ->set('winner', $game->team2)
-            ->call('update', $game)
-            ->assertHasErrors(['team2' => $rule]);
-    })->with([
-        'required' => ['required', null],
-    ]);
-
-    test('team2::different', function(){
-        $admin = User::factory()->admin()->create();
-        $team1 = Team::factory()->createOne();
-        $team2 = Team::factory()->createOne();
-        $game = Game::factory()->create([
-            'team_1_id' => $team1->getKey(),
-            'team_2_id' => $team2->getKey(),
-        ]);
-        $day = Carbon::tomorrow()->format('Y-m-d');
-        Livewire::actingAs($admin)
-            ->test(UpdateGame::class)
-            ->set('team1',$team1)
-            ->set('team2',$team1)
-            ->set('goalTeam1', 1)
-            ->set('goalTeam2', 1)
-            ->set('local', 'street')
-            ->set('day', $day)
-            ->set('winner', $game->team2)
-            ->call('update', $game)
-            ->assertHasErrors(['team2' => 'The team2 field and team1 must be different.']);
-    });
     test('local', function($rule,$value){
         $admin = User::factory()->admin()->create();
         $team1 = Team::factory()->createOne();
@@ -148,9 +70,7 @@ describe('validation tests', function (){
         ]);
         $day = Carbon::tomorrow()->format('Y-m-d');
         Livewire::actingAs($admin)
-            ->test(UpdateGame::class)
-            ->set('team1',$team1)
-            ->set('team2',$team2)
+            ->test(UpdateGame::class, ['game' => $game])
             ->set('goalTeam1', 1)
             ->set('goalTeam2', 1)
             ->set('local', $value)
@@ -174,9 +94,7 @@ describe('validation tests', function (){
         ]);
         $day = Carbon::tomorrow()->format('Y-m-d');
         Livewire::actingAs($admin)
-            ->test(UpdateGame::class)
-            ->set('team1',$team1)
-            ->set('team2',$team2)
+            ->test(UpdateGame::class, ['game' => $game])
             ->set('goalTeam1', 1)
             ->set('goalTeam2', 1)
             ->set('local', 'street')
