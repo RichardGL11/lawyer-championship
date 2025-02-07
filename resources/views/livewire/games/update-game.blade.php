@@ -17,12 +17,12 @@
                 </div>
                 <div>
                     <label class="text-gray-700 dark:text-gray-200" for="goalTeam1">Goals Firs Team</label>
-                    <input type="number" wire:model="goalTeam1" min="0" name="goalTeam1">
+                    <input type="number" wire:model.live="goalTeam1" min="0" name="goalTeam1">
                     @error('goalTeam1') <span class="text-red-500goalTeam">{{ $message }}</span> @enderror
                 </div>
                 <div>
                     <label class="text-gray-700 dark:text-gray-200" for="team2">Goals Second Team</label>
-                    <input type="number" wire:model="goalTeam2" min="0" name="goalTeam2"  >
+                    <input type="number" wire:model.live="goalTeam2" min="0" name="goalTeam2"  >
                     @error('goalTeam2') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
                 <div>
