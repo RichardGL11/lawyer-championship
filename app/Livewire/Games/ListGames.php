@@ -25,6 +25,7 @@ class ListGames extends Component
         $this->championship = $championship;
     }
 
+    #[On('echo:goal-channel,GoalEvent')]
     #[On('game::created')]
     #[Layout('layouts.app')]
     public function render()
