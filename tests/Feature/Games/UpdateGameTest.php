@@ -1,16 +1,19 @@
 <?php
 
+use App\Events\GoalEvent;
 use App\Livewire\Games\UpdateGame;
 use App\Models\Championship;
 use App\Models\Game;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Event;
 use Livewire\Livewire;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 
 test('Administrator should be able to update an game', function(){
+    Event::fake();
     $admin = User::factory()->admin()->create();
     $team1 = Team::factory()->createOne();
     $team2 = Team::factory()->createOne();
@@ -56,6 +59,31 @@ test('normal user can not update an game', function () {
     Livewire::actingAs($user)
         ->test(UpdateGame::class,['game' => $game])
         ->assertForbidden();
+});
+
+test('when updating a goal attribute the goal event should be dispatched', function(){
+    Event::fake(GoalEvent::class);
+    $admin = User::factory()->admin()->create();
+    $team1 = Team::factory()->createOne();
+    $team2 = Team::factory()->createOne();
+    $game = Game::factory()->create([
+        'team_1_id' => $team1->getKey(),
+        'team_2_id' => $team2->getKey(),
+    ]);
+    $day = Carbon::tomorrow()->format('Y-m-d');
+
+    Livewire::actingAs($admin)
+        ->test(UpdateGame::class,['game' => $game])
+        ->set('goalTeam1', 1)
+        ->set('goalTeam2', 1)
+        ->set('local', 'street')
+        ->set('day', $day)
+        ->set('winner', $game->team2->id)
+        ->call('update')
+        ->assertHasNoErrors();
+
+    Event::assertDispatched(GoalEvent::class);
+
 });
 
 describe('validation tests', function (){
